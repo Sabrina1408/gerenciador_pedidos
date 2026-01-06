@@ -1,6 +1,8 @@
 package com.example.gerenciador_pedidos.model;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Categoria {
@@ -8,8 +10,19 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Produto> produtos = new ArrayList<>();
 
-    public Categoria() {
+  public List<Produto> getProdutos() {
+    return produtos;
+  }
+
+  public void setProdutos(List<Produto> produtos) {
+    produtos.forEach(produto -> produto.setCategoria(this));
+    this.produtos = produtos;
+  }
+
+  public Categoria() {
     }
 
     public Categoria(String nome) {
