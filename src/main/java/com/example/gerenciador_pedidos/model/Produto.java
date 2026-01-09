@@ -7,7 +7,7 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nome;
     @Column(name = "valor")
     private double preco;
@@ -20,10 +20,18 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String nome, double preco, Fornecedor fonecedor) {
+    /**
+     * Construtor para Produto sem categoria.
+     */
+    public Produto(String nome, double preco, Fornecedor fornecedor) {
+        this(nome, preco, null, fornecedor);
+    }
+
+    public Produto(String nome, double preco, Categoria categoria, Fornecedor fornecedor) {
         this.nome = nome;
         this.preco = preco;
-        this.fornecedor = fonecedor;
+        this.categoria = categoria;
+        this.fornecedor = fornecedor;
     }
 
     public Long getId() {
@@ -65,4 +73,15 @@ public class Produto {
   public void setFornecedor(Fornecedor fornecedor) {
     this.fornecedor = fornecedor;
   }
+
+    /**
+     * Cria um produto com nome, preço e fornecedor.
+     * @param nome Nome do produto
+     * @param preco Preço do produto
+     * @param fornecedor Fornecedor do produto
+     * @return Produto criado
+     */
+    public static Produto criarProduto(String nome, double preco, Fornecedor fornecedor) {
+        return new Produto(nome, preco, null, fornecedor);
+    }
 }

@@ -5,6 +5,7 @@ import com.example.gerenciador_pedidos.model.Fornecedor;
 import com.example.gerenciador_pedidos.repository.FornecedorRepository;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,10 @@ public class Principal implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        List<Categoria> categorias = categoriaRepository.findByNomeContaining("Ford");
+        for (Categoria categoria : categorias) {
+            System.out.println("Categoria encontrada: " + categoria.getNome());
+        }
         Fornecedor fornecedor = new Fornecedor("Fornecedor A");
         fornecedorRepository.save(fornecedor);
 
